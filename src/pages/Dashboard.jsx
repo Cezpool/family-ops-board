@@ -36,22 +36,22 @@ export default function Dashboard() {
     setLoading(true)
 
     const { data, error } = await supabase
-		.from('tasks')
-		.select(`
-			id, title, description, assigned_date, due_date, completed_date,
-			created_at, updated_at, created_by,
-			archived,
-			category:categories(id, name),
-			creator:profiles!tasks_created_by_fkey(id, display_name),
-			task_participants(
-				id, user_id, participant_role, status,
-				date_assigned, date_completed, unable_reason, last_checkin_at,
-				needs_type, needed_item, needs_reason, waiting_on, request_status,
-				profile:profiles(id, display_name, email)
-			)
-		`)
-.eq('archived', false)
-.order('due_date', { ascending: true, nullsFirst: false })
+      .from('tasks')
+      .select(`
+        id, title, description, assigned_date, due_date, completed_date,
+        created_at, updated_at, created_by,
+        archived,
+        category:categories(id, name),
+        creator:profiles!tasks_created_by_fkey(id, display_name),
+        task_participants(
+          id, user_id, participant_role, status,
+          date_assigned, date_completed, unable_reason, last_checkin_at,
+          needs_type, needed_item, needs_reason, waiting_on, request_status,
+          profile:profiles(id, display_name, email)
+        )
+      `)
+      .eq('archived', false)
+      .order('due_date', { ascending: true, nullsFirst: false })
 
     if (!error) setTasks(data || [])
     setLoading(false)
@@ -75,29 +75,31 @@ export default function Dashboard() {
   }
 
   function groupByCategory(categoryName) {
-    return tasks.filter(t => t.category?.name === categoryName)
+    return tasks.filter(t => !t.archived && t.category?.name === categoryName)
   }
 
   const myParticipant = task =>
     task.task_participants?.find(p => p.user_id === profile?.id)
 
   const needsAttention = isParent
-    ? tasks.flatMap(task =>
-        (task.task_participants || [])
-          .filter(needsAttentionForParticipant)
-          .map(p => ({
-            taskId: task.id,
-            taskTitle: task.title,
-            category: task.category?.name,
-            participantName: p.profile?.display_name,
-            participantStatus: p.status,
-            needsType: p.needs_type,
-            neededItem: p.needed_item,
-            needsReason: p.needs_reason,
-            waitingOn: p.waiting_on,
-            requestStatus: p.request_status,
-          }))
-      )
+    ? tasks
+        .filter(task => !task.archived)
+        .flatMap(task =>
+          (task.task_participants || [])
+            .filter(needsAttentionForParticipant)
+            .map(p => ({
+              taskId: task.id,
+              taskTitle: task.title,
+              category: task.category?.name,
+              participantName: p.profile?.display_name,
+              participantStatus: p.status,
+              needsType: p.needs_type,
+              neededItem: p.needed_item,
+              needsReason: p.needs_reason,
+              waitingOn: p.waiting_on,
+              requestStatus: p.request_status,
+            }))
+        )
     : []
 
   if (loading) return <div className="loading-screen">Loading your board…</div>
