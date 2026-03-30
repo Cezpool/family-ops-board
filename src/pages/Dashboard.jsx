@@ -36,20 +36,22 @@ export default function Dashboard() {
     setLoading(true)
 
     const { data, error } = await supabase
-      .from('tasks')
-      .select(`
-        id, title, description, assigned_date, due_date, completed_date,
-        created_at, updated_at, created_by,
-        category:categories(id, name),
-        creator:profiles!tasks_created_by_fkey(id, display_name),
-        task_participants(
-          id, user_id, participant_role, status,
-          date_assigned, date_completed, unable_reason, last_checkin_at,
-          needs_type, needed_item, needs_reason, waiting_on, request_status,
-          profile:profiles(id, display_name, email)
-        )
-      `)
-      .order('due_date', { ascending: true, nullsFirst: false })
+		.from('tasks')
+		.select(`
+			id, title, description, assigned_date, due_date, completed_date,
+			created_at, updated_at, created_by,
+			archived,
+			category:categories(id, name),
+			creator:profiles!tasks_created_by_fkey(id, display_name),
+			task_participants(
+				id, user_id, participant_role, status,
+				date_assigned, date_completed, unable_reason, last_checkin_at,
+				needs_type, needed_item, needs_reason, waiting_on, request_status,
+				profile:profiles(id, display_name, email)
+			)
+		`)
+.eq('archived', false)
+.order('due_date', { ascending: true, nullsFirst: false })
 
     if (!error) setTasks(data || [])
     setLoading(false)
