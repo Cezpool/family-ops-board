@@ -31,19 +31,16 @@ export default function TaskModal({
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('overview')
 
-  // Edit state (parents)
   const [editing, setEditing] = useState(false)
   const [editTitle, setEditTitle] = useState('')
   const [editDesc, setEditDesc] = useState('')
   const [editDueDate, setEditDueDate] = useState('')
   const [saving, setSaving] = useState(false)
 
-  // Comment compose
   const [commentBody, setCommentBody] = useState('')
   const [commentType, setCommentType] = useState('check_in')
   const [posting, setPosting] = useState(false)
 
-  // Needs / waiting state
   const [needsType, setNeedsType] = useState('')
   const [neededItem, setNeededItem] = useState('')
   const [needsReason, setNeedsReason] = useState('')
@@ -55,7 +52,7 @@ export default function TaskModal({
       .from('tasks')
       .select(`
         id, title, description, assigned_date, due_date, completed_date,
-        created_at, updated_at, created_by,
+        created_at, updated_at, created_by, archived,
         category:categories(id, name),
         creator:profiles!tasks_created_by_fkey(id, display_name),
         task_participants(
@@ -115,6 +112,8 @@ export default function TaskModal({
 
   const me = task?.task_participants?.find(p => p.user_id === currentProfile?.id)
   const canEditTask = isParent && task?.created_by === currentProfile?.id
+  const canArchive = isParent
+  const canDelete = isParent && task?.created_by === currentProfile?.id
   const overdue = isOverdue(task?.due_date, me?.status)
 
   async function setMyStatus(newStatus) {
@@ -192,6 +191,35 @@ export default function TaskModal({
     await fetchTask()
     onUpdated()
     setSaving(false)
+  }
+
+  async function archiveTask() {
+    if (!canArchive) return
+    if (!confirm('Archive this task?')) return
+
+    setSaving(true)
+
+    await supabase
+      .from('tasks')
+      .update({ archived: true })
+      .eq('id', taskId)
+
+    await logActivity(taskId, currentProfile.id, 'task_archived', {})
+
+    onUpdated()
+    onClose()
+  }
+
+  async function deleteTask() {
+    if (!canDelete) return
+    if (!confirm('DELETE this task permanently? This cannot be undone.')) return
+
+    setSaving(true)
+
+    await supabase.from('tasks').delete().eq('id', taskId)
+
+    onUpdated()
+    onClose()
   }
 
   async function postComment(e) {
@@ -364,7 +392,7 @@ export default function TaskModal({
                 )}
               </div>
 
-              {canEditTask && (
+              {(canEditTask || canArchive) && (
                 <div className="edit-actions">
                   {editing ? (
                     <>
@@ -376,9 +404,33 @@ export default function TaskModal({
                       </button>
                     </>
                   ) : (
-                    <button className="btn btn-outline btn-sm" onClick={() => setEditing(true)}>
-                      Edit Task
-                    </button>
+                    <>
+                      {canEditTask && (
+                        <button className="btn btn-outline btn-sm" onClick={() => setEditing(true)}>
+                          Edit Task
+                        </button>
+                      )}
+
+                      {canArchive && (
+                        <button
+                          className="btn btn-outline btn-sm"
+                          onClick={archiveTask}
+                          disabled={saving}
+                        >
+                          Archive
+                        </button>
+                      )}
+
+                      {canDelete && (
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={deleteTask}
+                          disabled={saving}
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </>
                   )}
                 </div>
               )}
@@ -662,6 +714,8 @@ function formatAction(a) {
       return 'created the task'
     case 'needs_updated':
       return 'updated waiting / need details'
+    case 'task_archived':
+      return 'archived the task'
     default:
       return String(a.action_type || '').replace(/_/g, ' ')
   }
