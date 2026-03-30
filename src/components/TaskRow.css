@@ -1,0 +1,106 @@
+.task-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.1s;
+}
+
+.task-row:last-child {
+  border-bottom: none;
+}
+
+.task-row:hover {
+  background: var(--bg-alt);
+}
+
+/* 🔴 Stronger overdue visual */
+.task-row--overdue {
+  border-left: 4px solid #c0392b;
+  background: #fff6f4;
+}
+
+/* Completed fade */
+.task-row--completed {
+  opacity: 0.55;
+}
+
+.task-row-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+/* Title + badge row */
+.task-row-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.task-row-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task-row-dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-size: 11px;
+  color: var(--ink-3);
+  font-family: var(--font-mono);
+}
+
+/* 🔴 Overdue date emphasis */
+.date-overdue {
+  color: #c0392b !important;
+  font-weight: 600;
+}
+
+.date-done {
+  color: var(--green);
+}
+
+.task-row-participants {
+  font-size: 11px;
+  color: var(--ink-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task-row-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.task-row-arrow {
+  font-size: 16px;
+  color: var(--ink-3);
+}
+
+/* 🔴 Overdue badge */
+.overdue-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #fdecea;
+  color: #a93226;
+  border: 1px solid #f5c6cb;
+  font-weight: 600;
+}

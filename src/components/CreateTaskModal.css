@@ -1,0 +1,116 @@
+.create-modal {
+  max-height: 94vh;
+}
+
+.create-modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-5);
+}
+
+.create-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.create-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-3);
+}
+
+@media (max-width: 500px) {
+  .create-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.create-form-actions {
+  display: flex;
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+}
+
+/* ── User checklist ── */
+.user-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: var(--space-2);
+  background: var(--bg-alt);
+}
+
+.user-check-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.user-check-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  padding: var(--space-2) var(--space-2);
+  border-radius: var(--r-sm);
+  transition: background 0.1s;
+}
+.user-check-label:hover { background: var(--bg-card); }
+
+.user-check-label input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--navy);
+  cursor: pointer;
+}
+
+.user-check-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.user-check-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  flex: 1;
+}
+
+.user-check-role-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-3);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 1px 5px;
+  border-radius: var(--r-sm);
+}
+
+.user-role-input {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 5px 10px;
+  margin-left: 44px;
+  background: var(--bg-card);
+  outline: none;
+  width: calc(100% - 44px);
+}
+.user-role-input:focus { border-color: var(--navy); }
