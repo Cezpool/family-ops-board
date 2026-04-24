@@ -276,7 +276,7 @@ export default function DisplayPage() {
         background: '#f5f7fa',
         color: '#1f2933',
         fontFamily: 'Arial, sans-serif',
-        padding: '14px',
+        padding: 'clamp(6px, 1vw, 14px)',
         boxSizing: 'border-box',
       }}
     >
@@ -292,7 +292,7 @@ export default function DisplayPage() {
         <div>
           <h1
             style={{
-              fontSize: '34px',
+              fontSize: 'clamp(22px, 2.6vw, 34px)',
               margin: 0,
               lineHeight: 1.1,
             }}
@@ -364,7 +364,7 @@ export default function DisplayPage() {
 
       <div
         style={{
-          fontSize: '24px',
+          fontSize: 'clamp(18px, 2vw, 24px)',
           fontWeight: 700,
           marginBottom: '14px',
         }}
@@ -427,8 +427,8 @@ export default function DisplayPage() {
                 <div
                   key={date.toISOString()}
                   style={{
-                    height: 'calc((100vh - 210px) / 6)',
-                    minHeight: '95px',
+                    height: 'calc((100vh - clamp(140px, 18vh, 210px)) / 6)',
+                    minHeight: 0,
                     background: inCurrentMonth ? '#ffffff' : '#f8fafc',
                     border: '1px solid #d0d7de',
                     outline: isToday ? '2px solid #2563eb' : 'none',
@@ -437,7 +437,7 @@ export default function DisplayPage() {
                       ? '0 0 0 2px rgba(37, 99, 235, 0.15)'
                       : '0 1px 2px rgba(0,0,0,0.05)',
                     borderRadius: '6px',
-                    padding: '10px',
+                    padding: 'clamp(4px, 0.7vw, 10px)',
                     boxSizing: 'border-box',
                     display: 'flex',
                     flexDirection: 'column',
@@ -496,13 +496,13 @@ export default function DisplayPage() {
                           title={task.title}
                           style={{
                             ...chipStyle,
-                            height: '28px',
+                            height: 'clamp(18px, 2.8vh, 28px)',
                             overflow: 'hidden',
                             display: 'block',
-                            padding: '6px 8px',
+                            padding: 'clamp(2px, 0.4vh, 6px) clamp(4px, 0.6vw, 8px)',
                             textAlign: 'left',
                             cursor: 'pointer',
-                            fontSize: '12px',
+                            fontSize: 'clamp(9px, 1.2vw, 12px)',
                             lineHeight: 1.1,
                             borderRadius: '4px',
                           }}
