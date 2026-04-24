@@ -136,6 +136,12 @@ function buildCalendarDays(monthDate) {
 }
 
 export default function DisplayPage() {
+  
+  const scale = Math.min(
+	window.innerWidth / 1920,
+	window.innerHeight / 1080
+  )
+  
   const [allProfiles, setAllProfiles] = useState([])
   const [tasks, setTasks] = useState([])
   const [loading, setLoading] = useState(true)
@@ -271,19 +277,19 @@ export default function DisplayPage() {
   return (
     <div
       style={{
-		height: '100vh',
 		overflow: 'hidden',
+
+		transform: `scale(${scale})`,
+		transformOrigin: 'top left',
+
+		width: `${100 / scale}vw`,
+		height: `${100 / scale}vh`,
+
 		background: '#f5f7fa',
 		color: '#1f2933',
 		fontFamily: 'Arial, sans-serif',
 		padding: 'clamp(6px, 1vw, 14px)',
 		boxSizing: 'border-box',
-		zoom:
-		  window.innerWidth <= 1366 || window.innerHeight <= 768
-			? 0.67
-			: window.innerWidth <= 1600 || window.innerHeight <= 900
-			  ? 0.8
-			  : 1,
 	  }}
     >
       <div
