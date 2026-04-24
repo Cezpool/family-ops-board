@@ -139,7 +139,8 @@ export default function DisplayPage() {
   
   const scale = Math.min(
 	window.innerWidth / 1920,
-	window.innerHeight / 1080
+	window.innerHeight / 1080,
+	1
   )
   
   const [allProfiles, setAllProfiles] = useState([])
