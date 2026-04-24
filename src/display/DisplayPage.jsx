@@ -148,6 +148,7 @@ export default function DisplayPage() {
   const [loading, setLoading] = useState(true)
   const [errorMsg, setErrorMsg] = useState(null)
   const [selectedTask, setSelectedTask] = useState(null)
+  const [selectedDayTasks, setSelectedDayTasks] = useState(null)
   const [monthCursor, setMonthCursor] = useState(() => {
     const now = new Date()
     return new Date(now.getFullYear(), now.getMonth(), 1)
@@ -537,19 +538,19 @@ export default function DisplayPage() {
                     })}
 
                     {overflowCount > 0 && (
-                      <div
-                        onClick={() => setSelectedTask(dayTasks[2].id)}
-                        style={{
-                          fontSize: '12px',
-                          color: '#2563eb',
-                          fontWeight: 600,
-                          cursor: 'pointer',
-                          marginTop: 'auto',
-                        }}
-                      >
-                        +{overflowCount} more
-                      </div>
-                    )}
+					  <div
+						onClick={() => setSelectedDayTasks(dayTasks.slice(2))}
+						style={{
+						  fontSize: '12px',
+						  color: '#2563eb',
+						  fontWeight: 600,
+						  cursor: 'pointer',
+						  marginTop: 'auto',
+						}}
+					  >
+						+{overflowCount} more
+					  </div>
+					)}
                   </div>
                 </div>
               )
@@ -557,6 +558,61 @@ export default function DisplayPage() {
           </div>
         </>
       )}
+	  
+	  {selectedDayTasks && (
+		<div
+		  onClick={() => setSelectedDayTasks(null)}
+		  style={{
+			position: 'fixed',
+			inset: 0,
+			background: 'rgba(0,0,0,0.45)',
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center',
+			zIndex: 9998,
+		  }}
+		>
+		  <div
+			onClick={e => e.stopPropagation()}
+			style={{
+			  width: 'min(520px, 92vw)',
+			  background: '#ffffff',
+			  border: '1px solid #d0d7de',
+			  borderRadius: '8px',
+			  padding: '18px',
+			  boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+			}}
+		  >
+			<div style={{ fontSize: '22px', fontWeight: 700, marginBottom: '12px' }}>
+			  More Tasks
+			</div>
+
+			<div style={{ display: 'grid', gap: '8px' }}>
+			  {selectedDayTasks.map(task => (
+				<button
+				  key={task.id}
+				  onClick={() => {
+					setSelectedDayTasks(null)
+					setSelectedTask(task.id)
+				  }}
+				  style={{
+					padding: '10px 12px',
+					textAlign: 'left',
+					background: '#f8fafc',
+					border: '1px solid #d0d7de',
+					borderRadius: '6px',
+					cursor: 'pointer',
+					fontWeight: 700,
+					color: '#1f2933',
+				  }}
+				>
+				  {task.title}
+				</button>
+			  ))}
+			</div>
+		  </div>
+		</div>
+	  )}
 
       {selectedTask && (
         <TaskModal
