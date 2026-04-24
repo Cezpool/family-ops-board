@@ -172,6 +172,14 @@ export default function DisplayPage() {
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
   }, [])
+  
+  useEffect(() => {
+	const interval = setInterval(() => {
+      window.location.reload()
+	}, 5 * 60 * 1000) // every 5 minutes
+
+	return () => clearInterval(interval)
+  }, [])
 
   async function fetchTasks(silent = false) {
     if (!silent) setLoading(true)
