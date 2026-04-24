@@ -271,19 +271,20 @@ export default function DisplayPage() {
   return (
     <div
       style={{
-        overflow: 'hidden',
-		
-		transform: 'scale(0.67)',
-		transformOrigin: 'top left',
-		width: '149.25vw',
-		height: '149.25vh',
-        
+		height: '100vh',
+		overflow: 'hidden',
 		background: '#f5f7fa',
-        color: '#1f2933',
-        fontFamily: 'Arial, sans-serif',
-        padding: 'clamp(6px, 1vw, 14px)',
-        boxSizing: 'border-box',
-      }}
+		color: '#1f2933',
+		fontFamily: 'Arial, sans-serif',
+		padding: 'clamp(6px, 1vw, 14px)',
+		boxSizing: 'border-box',
+		zoom:
+		  window.innerWidth <= 1366 || window.innerHeight <= 768
+			? 0.67
+			: window.innerWidth <= 1600 || window.innerHeight <= 900
+			  ? 0.8
+			  : 1,
+	  }}
     >
       <div
         style={{
