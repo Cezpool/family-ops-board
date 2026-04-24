@@ -1,0 +1,123 @@
+D:\family_ops_board\family-ops-board\src\components\CreateTaskModal.jsx:2: import { supabase } from '../supabaseClient'
+D:\family_ops_board\family-ops-board\src\components\CreateTaskModal.jsx:10: export default function CreateTaskModal({ currentProfile, allProfiles, onClose }) {
+D:\family_ops_board\family-ops-board\src\components\CreateTaskModal.jsx:23: supabase
+D:\family_ops_board\family-ops-board\src\components\CreateTaskModal.jsx:24: .from('categories')
+D:\family_ops_board\family-ops-board\src\components\CreateTaskModal.jsx:25: .select('*')
+D:\family_ops_board\family-ops-board\src\components\CreateTaskModal.jsx:64: const { data: taskData, error: taskErr } = await supabase
+D:\family_ops_board\family-ops-board\src\components\CreateTaskModal.jsx:65: .from('tasks')
+D:\family_ops_board\family-ops-board\src\components\CreateTaskModal.jsx:70: created_by: currentProfile.id,
+D:\family_ops_board\family-ops-board\src\components\CreateTaskModal.jsx:74: .select('id')
+D:\family_ops_board\family-ops-board\src\components\CreateTaskModal.jsx:86: user_id: uid,
+D:\family_ops_board\family-ops-board\src\components\CreateTaskModal.jsx:92: const { error: participantsErr } = await supabase
+D:\family_ops_board\family-ops-board\src\components\CreateTaskModal.jsx:93: .from('task_participants')
+D:\family_ops_board\family-ops-board\src\components\CreateTaskModal.jsx:103: await logActivity(taskData.id, currentProfile.id, 'task_created', {
+D:\family_ops_board\family-ops-board\src\components\CreateTaskModal.jsx:192: {allProfiles.map(p => (
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:2: import { supabase } from '../supabaseClient'
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:22: currentProfile,
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:24: allProfiles,
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:51: const { data } = await supabase
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:52: .from('tasks')
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:53: .select(`
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:57: creator:profiles!tasks_created_by_fkey(id, display_name),
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:58: task_participants(
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:59: id, user_id, participant_role, status,
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:62: profile:profiles(id, display_name, email)
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:73: const myRow = data?.task_participants?.find(p => p.user_id === currentProfile?.id)
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:81: }, [taskId, currentProfile])
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:84: const { data } = await supabase
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:85: .from('task_comments')
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:86: .select('*, profile:profiles(id, display_name)')
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:94: const { data } = await supabase
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:95: .from('task_activity')
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:96: .select('*, actor:profiles(id, display_name)')
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:113: const me = task?.task_participants?.find(p => p.user_id === currentProfile?.id)
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:114: const canEditTask = isParent && task?.created_by === currentProfile?.id
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:116: const canDelete = isParent && task?.created_by === currentProfile?.id
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:135: await supabase.from('task_participants').update(updates).eq('id', me.id)
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:137: await logActivity(taskId, currentProfile.id, 'status_change', {
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:151: await supabase
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:152: .from('task_participants')
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:162: await logActivity(taskId, currentProfile.id, 'needs_updated', {
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:177: await supabase
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:178: .from('tasks')
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:186: await logActivity(taskId, currentProfile.id, 'task_updated', {
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:202: await supabase
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:203: .from('tasks')
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:207: await logActivity(taskId, currentProfile.id, 'task_archived', {})
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:219: await supabase.from('tasks').delete().eq('id', taskId)
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:231: await supabase.from('task_comments').insert({
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:233: user_id: currentProfile.id,
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:238: await logActivity(taskId, currentProfile.id, 'comment_added', {
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:359: {task.task_participants?.map(p => p.profile?.display_name).join(', ') || '—'}
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:366: {task.task_participants
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:369: ? `${p.profile?.display_name}: ${p.participant_role}`
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:610: {task.task_participants?.length === 0 && (
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:614: {task.task_participants?.map(p => (
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:617: {(p.profile?.display_name || '?')[0].toUpperCase()}
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:621: <span className="participant-name">{p.profile?.display_name}</span>
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:627: <span className="participant-email">{p.profile?.email}</span>
+D:\family_ops_board\family-ops-board\src\components\TaskModal.jsx:672: <span className="feed-author">{c.profile?.display_name}</span>
+D:\family_ops_board\family-ops-board\src\components\TaskRow.jsx:9: const participants = task.task_participants || []
+D:\family_ops_board\family-ops-board\src\components\TaskRow.jsx:11: .map(p => p.profile?.display_name)
+D:\family_ops_board\family-ops-board\src\context\AuthContext.jsx:2: import { supabase } from '../supabaseClient'
+D:\family_ops_board\family-ops-board\src\context\AuthContext.jsx:8: const [profile, setProfile] = useState(null)
+D:\family_ops_board\family-ops-board\src\context\AuthContext.jsx:12: supabase.auth.getSession().then(({ data: { session } }) => {
+D:\family_ops_board\family-ops-board\src\context\AuthContext.jsx:14: if (session) fetchProfile(session.user.id)
+D:\family_ops_board\family-ops-board\src\context\AuthContext.jsx:18: const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+D:\family_ops_board\family-ops-board\src\context\AuthContext.jsx:20: if (session) fetchProfile(session.user.id)
+D:\family_ops_board\family-ops-board\src\context\AuthContext.jsx:21: else setProfile(null)
+D:\family_ops_board\family-ops-board\src\context\AuthContext.jsx:27: async function fetchProfile(userId) {
+D:\family_ops_board\family-ops-board\src\context\AuthContext.jsx:28: const { data } = await supabase
+D:\family_ops_board\family-ops-board\src\context\AuthContext.jsx:29: .from('profiles')
+D:\family_ops_board\family-ops-board\src\context\AuthContext.jsx:30: .select('*')
+D:\family_ops_board\family-ops-board\src\context\AuthContext.jsx:33: setProfile(data)
+D:\family_ops_board\family-ops-board\src\context\AuthContext.jsx:36: const isParent = profile?.role === 'parent_admin'
+D:\family_ops_board\family-ops-board\src\context\AuthContext.jsx:39: <AuthContext.Provider value={{ session, profile, isParent, fetchProfile }}>
+D:\family_ops_board\family-ops-board\src\display\DisplayPage.jsx:2: import { supabase } from '../supabaseClient'
+D:\family_ops_board\family-ops-board\src\display\DisplayPage.jsx:14: console.log("Fetching tasks from Supabase...")
+D:\family_ops_board\family-ops-board\src\display\DisplayPage.jsx:16: const { data, error } = await supabase
+D:\family_ops_board\family-ops-board\src\display\DisplayPage.jsx:17: .from('tasks')
+D:\family_ops_board\family-ops-board\src\display\DisplayPage.jsx:18: .select(`
+D:\family_ops_board\family-ops-board\src\display\DisplayPage.jsx:20: task_participants (
+D:\family_ops_board\family-ops-board\src\display\DisplayPage.jsx:27: console.error('Supabase error:', error)
+D:\family_ops_board\family-ops-board\src\display\DisplayPage.jsx:66: (task.task_participants || [])
+D:\family_ops_board\family-ops-board\src\display\DisplayPage.jsx:67: .map(p => p.profile?.display_name || p.display_name)
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:2: import { supabase } from '../supabaseClient'
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:27: const { profile, isParent } = useAuth()
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:32: const [allProfiles, setAllProfiles] = useState([])
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:35: if (!profile) return
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:38: const { data, error } = await supabase
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:39: .from('tasks')
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:40: .select(`
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:45: creator:profiles!tasks_created_by_fkey(id, display_name),
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:46: task_participants(
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:47: id, user_id, participant_role, status,
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:50: profile:profiles(id, display_name, email)
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:58: }, [profile])
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:60: async function fetchProfiles() {
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:61: const { data } = await supabase
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:62: .from('profiles')
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:63: .select('id, display_name, email, role')
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:65: setAllProfiles(data || [])
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:70: if (isParent) fetchProfiles()
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:74: await supabase.auth.signOut()
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:82: task.task_participants?.find(p => p.user_id === profile?.id)
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:88: (task.task_participants || [])
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:94: participantName: p.profile?.display_name,
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:117: <span className="dash-name">{profile?.display_name}</span>
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:118: <span className="dash-role-badge" data-role={profile?.role}>
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:202: currentUserId={profile?.id}
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:214: currentProfile={profile}
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:216: allProfiles={allProfiles}
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:227: currentProfile={profile}
+D:\family_ops_board\family-ops-board\src\pages\Dashboard.jsx:228: allProfiles={allProfiles}
+D:\family_ops_board\family-ops-board\src\pages\Login.jsx:2: import { supabase } from '../supabaseClient'
+D:\family_ops_board\family-ops-board\src\pages\Login.jsx:21: const { error } = await supabase.auth.signInWithPassword({ email, password })
+D:\family_ops_board\family-ops-board\src\utils\activity.js:1: import { supabase } from '../supabaseClient'
+D:\family_ops_board\family-ops-board\src\utils\activity.js:4: await supabase.from('task_activity').insert({
+D:\family_ops_board\family-ops-board\src\supabaseClient.js:1: import { createClient } from '@supabase/supabase-js'
+D:\family_ops_board\family-ops-board\src\supabaseClient.js:3: const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+D:\family_ops_board\family-ops-board\src\supabaseClient.js:4: const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+D:\family_ops_board\family-ops-board\src\supabaseClient.js:6: if (!supabaseUrl || !supabaseAnonKey) {
+D:\family_ops_board\family-ops-board\src\supabaseClient.js:7: throw new Error('Missing Supabase environment variables. Check your .env file.')
+D:\family_ops_board\family-ops-board\src\supabaseClient.js:10: export const supabase = createClient(supabaseUrl, supabaseAnonKey)

@@ -20,14 +20,13 @@
 .modal-box {
   background: var(--bg-card);
   border: 1.5px solid var(--border);
-  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  border-radius: var(--r-lg);
   box-shadow: var(--shadow-lg);
-  width: 100%;
-  max-width: 640px;
-  max-height: 92vh;
+  width: min(1100px, 95vw);
+  max-height: 90vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 @media (min-width: 600px) {
@@ -75,11 +74,11 @@
 .modal-overdue-tag {
   font-family: var(--font-mono);
   font-size: 10px;
-  font-weight: 600;
-  color: var(--red);
-  background: var(--red-light);
-  border: 1px solid #fca5a5;
-  padding: 2px 6px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #dc2626;
+  border: 1px solid #991b1b;
+  padding: 2px 8px;
   border-radius: var(--r-sm);
   letter-spacing: 0.05em;
 }

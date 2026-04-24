@@ -1,0 +1,11 @@
+
+src\App.jsx:1:import { Routes, Route, Navigate } from 'react-router-dom'
+src\App.jsx:3:import Login from './pages/Login'
+src\App.jsx:17:        path="/login"
+src\App.jsx:18:        element={session ? <Navigate to="/me" replace /> : <Login />}
+src\App.jsx:23:        element={session ? <Dashboard /> : <Navigate to="/login" replace />}
+src\App.jsx:28:        element={<Navigate to={session ? '/me' : '/login'} replace />}
+src\App.jsx:35:  const path = window.location.pathname
+src\components\TaskModal.jsx:873:      return String(a.action_type || '').replace(/_/g, ' ')
+src\pages\Login.jsx:3:import './Login.css'
+

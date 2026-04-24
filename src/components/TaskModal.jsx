@@ -111,9 +111,11 @@ export default function TaskModal({
   }
 
   const me = task?.task_participants?.find(p => p.user_id === currentProfile?.id)
-  const canEditTask = isParent && task?.created_by === currentProfile?.id
-  const canArchive = isParent
-  const canDelete = isParent && task?.created_by === currentProfile?.id
+  const isDisplayMode = currentProfile?.id === 'display-mode'
+
+  const canEditTask = !isDisplayMode && isParent && task?.created_by === currentProfile?.id
+  const canArchive = !isDisplayMode && isParent
+  const canDelete = !isDisplayMode && isParent && task?.created_by === currentProfile?.id
   const overdue = isOverdue(task?.due_date, me?.status)
 
   async function setMyStatus(newStatus) {
@@ -255,6 +257,154 @@ export default function TaskModal({
   }
 
   if (!task) return null
+  
+  if (isDisplayMode) {
+  return (
+    <div className="modal-backdrop" onClick={handleBackdrop}>
+      <div className="modal-box" role="dialog" aria-modal="true">
+
+        {/* HEADER */}
+        <div className="modal-header">
+          <div className="modal-header-left">
+            <span className="modal-category">{task.category?.name}</span>
+            {overdue && <span className="modal-overdue-tag">OVERDUE</span>}
+          </div>
+          <button className="modal-close" onClick={onClose}>✕</button>
+        </div>
+
+        {/* TITLE */}
+        <div className="modal-title-row">
+          <h2 className="modal-title">{task.title}</h2>
+        </div>
+
+        {/* CONTENT */}
+        <div className="modal-content">
+
+          {/* DESCRIPTION */}
+          <div className="overview-section">
+            <div className="overview-label">Description</div>
+            <div className="overview-value">
+              {task.description || <span className="overview-empty">No description.</span>}
+            </div>
+          </div>
+
+          {/* CORE GRID */}
+          <div className="overview-grid">
+
+            <div className="overview-section">
+              <div className="overview-label">Created by</div>
+              <div className="overview-value">{task.creator?.display_name}</div>
+            </div>
+
+            <div className="overview-section">
+              <div className="overview-label">Category</div>
+              <div className="overview-value">{task.category?.name}</div>
+            </div>
+
+            <div className="overview-section">
+              <div className="overview-label">Assigned</div>
+              <div className="overview-value">{formatDate(task.assigned_date)}</div>
+            </div>
+
+            <div className="overview-section">
+              <div className="overview-label">Due Date</div>
+              <div className={`overview-value ${overdue ? 'overview-overdue' : ''}`}>
+                {formatDate(task.due_date)}
+              </div>
+            </div>
+
+            <div className="overview-section">
+              <div className="overview-label">Completed</div>
+              <div className="overview-value">{formatDate(task.completed_date)}</div>
+            </div>
+
+            <div className="overview-section">
+              <div className="overview-label">Assigned Users</div>
+              <div className="overview-value">
+                {task.task_participants?.map(p => p.profile?.display_name).join(', ') || '—'}
+              </div>
+            </div>
+
+          </div>
+
+          <div
+			style={{
+			  display: 'grid',
+			  gridTemplateColumns: '1.2fr 1fr 1fr',
+			  gap: '20px',
+			  marginTop: '20px'
+			}}
+		  >
+
+			{/* PARTICIPANTS */}
+			<div>
+			  <div className="overview-label">Participants</div>
+
+			  {task.task_participants?.map(p => (
+				<div key={p.id} className="participant-row">
+
+				  <div className="participant-avatar">
+					{(p.profile?.display_name || '?')[0].toUpperCase()}
+				  </div>
+
+				  <div className="participant-info">
+					<span className="participant-name">{p.profile?.display_name}</span>
+				  </div>
+
+				  <div className="participant-status">
+					<span className={`status-badge ${statusClass(p.status)}`}>
+					  {statusLabel(p.status)}
+					</span>
+	  			  </div>
+
+				</div>
+			  ))}
+			</div>
+
+			{/* FEED */}
+	  		<div>
+			  <div className="overview-label">Feed</div>
+
+			  {comments.length === 0 && (
+				<p className="overview-empty">No interactions yet.</p>
+			  )}
+
+			  {comments.slice(-5).map(c => (
+				<div key={c.id} className="feed-item">
+				  <div className="feed-meta">
+					<span className="feed-author">{c.profile?.display_name}</span>
+					<span className="feed-time">{formatDateTime(c.created_at)}</span>
+				  </div>
+				  <div className="feed-body">{c.body}</div>
+				</div>
+			  ))}
+			</div>
+
+			{/* ACTIVITY */}
+			<div>
+			  <div className="overview-label">Activity</div>
+
+			  {activity.length === 0 && (
+				<p className="overview-empty">No activity recorded.</p>
+			  )}
+
+			  {activity.slice(0, 5).map(a => (
+				<div key={a.id} className="activity-item">
+				  <div className="activity-dot" />
+				  <div className="activity-info">
+					<span className="activity-actor">{a.actor?.display_name}</span>{' '}
+					<span>{formatAction(a)}</span>
+				  </div>
+				</div>
+			  ))}
+			</div>
+
+		</div>
+      </div>
+    </div>
+  </div>
+  )
+}
 
   return (
     <div className="modal-backdrop" onClick={handleBackdrop}>
@@ -282,7 +432,10 @@ export default function TaskModal({
         </div>
 
         <div className="modal-tabs">
-          {['overview', 'actions', 'participants', 'feed', 'activity'].map(tab => (
+          {(isDisplayMode
+			? ['overview', 'participants', 'feed', 'activity']
+			: ['overview', 'actions', 'participants', 'feed', 'activity']
+		  ).map(tab => (
             <button
               key={tab}
               className={`modal-tab ${activeTab === tab ? 'modal-tab--active' : ''}`}

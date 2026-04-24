@@ -1,0 +1,21 @@
+{
+  "appId": "com.mayfield.familyops",
+  "appName": "Family Ops Board",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1500,
+      "backgroundColor": "#f5f3ef",
+      "showSpinner": false,
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP"
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#f5f3ef"
+    }
+  }
+}
