@@ -278,20 +278,12 @@ export default function DisplayPage() {
   return (
     <div
       style={{
-		position: 'fixed',
-		top: '50%',
-		left: '50%',
-	
-		transform: `translate(-50%, -50%) scale(${scale})`,
-		transformOrigin: 'top left',
-
-		width: '1920px',
-		height: '1080px',
-
+		height: '100vh',
+		overflow: 'hidden',
 		background: '#f5f7fa',
 		color: '#1f2933',
 		fontFamily: 'Arial, sans-serif',
-		padding: '14px',
+		padding: 'clamp(6px, 1vw, 14px)',
 		boxSizing: 'border-box',
 	  }}
     >
