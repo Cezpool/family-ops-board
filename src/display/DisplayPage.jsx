@@ -273,6 +273,10 @@ export default function DisplayPage() {
       style={{
         height: '100vh',
         overflow: 'hidden',
+		transform: 'scale(0.67)',
+		transformOrigin: 'top left',
+		width: '149.25vw',
+		height: '149.25vh',
         background: '#f5f7fa',
         color: '#1f2933',
         fontFamily: 'Arial, sans-serif',
